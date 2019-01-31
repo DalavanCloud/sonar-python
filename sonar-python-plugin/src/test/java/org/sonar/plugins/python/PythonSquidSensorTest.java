@@ -132,8 +132,6 @@ public class PythonSquidSensorTest {
     String msg = "number of TypeOfText for the highlighting of keyword 'def'";
     assertThat(context.highlightingTypeAt(key, 15, 2)).as(msg).hasSize(1);
 
-    assertThat(context.lineHits("moduleKey:file1.py", 1)).isEqualTo(expectedNumberOfLineHits);
-
     assertThat(context.allAnalysisErrors()).isEmpty();
   }
 

@@ -85,9 +85,6 @@ public class PythonScanner {
       }
       scanFile(pythonFile);
     }
-    if (!isSonarLint(context)) {
-      (new PythonCoverageSensor()).execute(context);
-    }
   }
 
   private void scanFile(InputFile inputFile) {
