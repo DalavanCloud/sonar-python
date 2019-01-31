@@ -91,7 +91,8 @@ public class PythonPlugin implements Plugin {
       PropertyDefinition.builder(PythonCoverageSensor.REPORT_PATHS_KEY)
         .index(20)
         .name("Path to coverage report(s)")
-        .description("Comma-separated list of paths pointing to coverage reports. Ant patterns are accepted for relative path. The reports have to conform to the Cobertura XML format.")
+        .description("Comma-separated list of paths pointing to coverage reports. Ant patterns are accepted for relative path. " +
+          "The reports have to conform to the Cobertura XML format.")
         .category(PYTHON_CATEGORY)
         .subCategory(TEST_AND_COVERAGE)
         .onQualifiers(Qualifiers.PROJECT)

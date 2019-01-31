@@ -93,7 +93,7 @@ public class PythonCoverageSensor implements Sensor {
     }
   }
 
-  private List<File> getCoverageReports(String baseDir, Configuration config) {
+  private static List<File> getCoverageReports(String baseDir, Configuration config) {
     if (!config.hasKey(REPORT_PATH_KEY) && !config.hasKey(REPORT_PATHS_KEY)) {
       return getReports(config, baseDir, REPORT_PATHS_KEY, DEFAULT_REPORT_PATH);
     }

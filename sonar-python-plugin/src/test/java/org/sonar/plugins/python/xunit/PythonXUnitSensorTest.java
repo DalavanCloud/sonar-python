@@ -49,7 +49,7 @@ public class PythonXUnitSensorTest {
   private File baseDir = new File("src/test/resources/org/sonar/plugins/python");
   Settings settings;
   PythonXUnitSensor sensor;
-  SensorContextTester context = SensorContextTester.create(baseDir);
+  SensorContextTester context;
   DefaultFileSystem fs;
   private final AnalysisWarningsWrapper analysisWarnings = spy(AnalysisWarningsWrapper.class);
 
@@ -58,6 +58,7 @@ public class PythonXUnitSensorTest {
 
   @Before
   public void setUp() {
+    context = SensorContextTester.create(baseDir);
     settings = context.settings();
     fs = new DefaultFileSystem(baseDir);
     sensor = new PythonXUnitSensor(context.config(), fs, analysisWarnings);

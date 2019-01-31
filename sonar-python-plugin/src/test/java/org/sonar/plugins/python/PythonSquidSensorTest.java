@@ -93,19 +93,8 @@ public class PythonSquidSensorTest {
   }
 
   @Test
-  public void test_execute_on_sonarqube() {
-    // with SonarQube configuration, coverage is activated
-    testExecute(NOSONARLINT_RUNTIME, 10);
-  }
-
-  @Test
   public void test_execute_on_sonarlint() {
-    // with SonarLint configuration, coverage is not activated
-    testExecute(SONARLINT_RUNTIME, null);
-  }
-
-  private void testExecute(SonarRuntime runtime, @Nullable Integer expectedNumberOfLineHits) {
-    context.setRuntime(runtime);
+    context.setRuntime(SONARLINT_RUNTIME);
 
     activeRules = new ActiveRulesBuilder()
       .addRule(new NewActiveRule.Builder()

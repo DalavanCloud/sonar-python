@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.Before;
@@ -35,12 +36,16 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.utils.log.LogTester;
 import org.sonar.api.utils.log.LoggerLevel;
 import org.sonar.plugins.python.TestUtils;
+import org.sonar.plugins.python.pylint.PylintImportSensor;
 import org.sonar.plugins.python.warnings.AnalysisWarningsWrapper;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -299,6 +304,26 @@ public class PythonCoverageSensorTest {
     coverageSensor.execute(context);
 
     assertThat(context.lineHits(FILE1_KEY, 1)).isNull();
+  }
+
+  @Test
+  public void no_default_report_log() {
+    SensorContextTester context = SensorContextTester.create(moduleBaseDir);
+    PythonCoverageSensor sensor = new PythonCoverageSensor(analysisWarnings);
+    sensor.execute(context);
+    assertThat(logTester.logs(LoggerLevel.DEBUG)).contains("No report was found for sonar.python.coverage.reportPaths using default pattern coverage-reports/*coverage-*.xml");
+  }
+
+  @Test
+  public void sensor_descriptor() {
+    DefaultSensorDescriptor descriptor = new DefaultSensorDescriptor();
+    new PythonCoverageSensor(analysisWarnings).describe(descriptor);
+    assertThat(descriptor.name()).isEqualTo("Cobertura Sensor for Python coverage");
+    assertThat(descriptor.languages()).containsOnly("py");
+  }
+
+  private static Configuration configuration(Map<String, String> mapproperties) {
+    return new ConfigurationBridge(new MapSettings().addProperties(mapproperties));
   }
 
   private String createReportWithAbsolutePaths() throws Exception {

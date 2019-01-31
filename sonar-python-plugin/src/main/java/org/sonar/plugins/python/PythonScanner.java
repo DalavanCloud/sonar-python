@@ -40,7 +40,6 @@ import org.sonar.api.measures.Metric;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-import org.sonar.plugins.python.coverage.PythonCoverageSensor;
 import org.sonar.plugins.python.cpd.PythonCpdAnalyzer;
 import org.sonar.python.IssueLocation;
 import org.sonar.python.PythonCheck;
@@ -214,7 +213,4 @@ public class PythonScanner {
       .save();
   }
 
-  private static boolean isSonarLint(SensorContext context) {
-    return context.runtime().getProduct() == SonarProduct.SONARLINT;
-  }
 }
